@@ -1,10 +1,12 @@
-header {
+body {
   background-color: #f7f7f7;
+}
+header {
   border-bottom: 1px solid #ebebeb;
 }
 
 .container-header {
-  width: 960px;
+  width: 1040px;
   height: 75.5px;
   margin: 0 auto;
 
@@ -42,4 +44,148 @@ header {
 
   font-style: italic;
   text-decoration: none;
+}
+
+main {
+  width: 1040px;
+  margin: 0 auto;
+  padding: 40px 0;
+
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.main-section h3 {
+  color: #707070;
+
+  font-size: 24px;
+  font-style: italic;
+  font-weight: normal;
+  text-transform: uppercase;
+
+  margin-bottom: 30px;
+}
+
+.main-section h3 span {
+  font-weight: bold;
+}
+
+.main-section strong {
+  color: #868686;
+  font-style: italic;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.main-section ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 380px;
+  margin-top: 30px;
+}
+
+.main-section li button {
+  border-radius: 100px;
+  width: 113px;
+  height: 34px;
+}
+
+.main-section .purple {
+  border: 2px solid #7f3992;
+  color: #7f3992;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.main-section .green {
+  border: 2px solid #01ac66;
+  color: #01ac66;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.main-section .orange {
+  border: 2px solid #f79c31;
+  color: #f79c31;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.main-section .description-game {
+  color: #868686;
+  font-size: 17px;
+  font-style: italic;
+
+  margin: 40px 0;
+}
+
+.main-section .description-game h4 {
+  font-weight: bold;
+}
+
+.main-section .numbers-container {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 20px;
+}
+
+.main-section .number {
+  background-color: #adc0c4;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 65px;
+  height: 65px;
+}
+
+.main-section .container-action-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 40px;
+}
+
+.main-section .container-action-buttons .button-empty {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+}
+
+.main-section .container-action-buttons button {
+  padding: 16px 28px;
+}
+
+.main-section .button-empty button {
+  border: 1px solid #27c383;
+  border-radius: 10px;
+  background-color: transparent;
+  color: #27c383;
+  font-weight: 500;
+}
+
+.main-section .button-cart {
+  border: 1px solid #27c383;
+  border-radius: 10px;
+  background-color: #27c383;
+  color: #fff;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+}
+
+.main-section .button-cart img {
+  margin-right: 8px;
 }
