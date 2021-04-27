@@ -1,9 +1,8 @@
 (function (win, doc) {
   'use strict'
 
-  console.log('Main.js')
-
   const $buttonGame = doc.querySelectorAll('[data-js="button-game"]')
+  const $numbersContainer = doc.querySelector('[data-js="numbers"]')
   const $descriptionGame = doc.querySelector('[data-js="description-game"]')
 
   let dataGame = []
@@ -31,6 +30,14 @@
       const { types } = JSON.parse(ajax.responseText)
       dataGame = types.filter(item => item.type === nameGame)
       $descriptionGame.innerHTML = dataGame.length > 0 ? dataGame[0].description : types[1].description
+      dataGame.length > 0 ? createNumbers(dataGame[0].range) : createNumbers(types[1].range)
+    }
+  }
+
+  function createNumbers(range) {
+    $numbersContainer.innerHTML = ''
+    for (let i = 1; i <= range; i++) {
+      $numbersContainer.innerHTML += `<div class="number">${i}</div>`
     }
   }
 
