@@ -172,6 +172,10 @@ main {
   height: 65px;
 }
 
+.main-section .selected {
+  background-color: #27c383;
+}
+
 .main-section .container-action-buttons {
   display: flex;
   justify-content: space-between;
@@ -188,6 +192,7 @@ main {
 
 .main-section .container-action-buttons button {
   padding: 16px 28px;
+  cursor: pointer;
 }
 
 .main-section .button-empty button {
