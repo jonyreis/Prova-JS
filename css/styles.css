@@ -94,35 +94,49 @@ main {
   margin-top: 30px;
 }
 
-.main-section li button {
+.main-section li label {
   border-radius: 100px;
-  width: 113px;
-  height: 34px;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+  padding: 8px 20px;
   cursor: pointer;
 }
 
-.main-section .purple {
+.purple input,
+.green input,
+.orange input {
+  display: none;
+}
+
+.purple input[type="radio"] + label {
   border: 2px solid #7f3992;
   color: #7f3992;
-  font-size: 14px;
-  font-style: italic;
-  font-weight: bold;
+}
+.purple input[type="radio"]:checked + label {
+  background-color: #7f3992;
+  border: 2px solid #7f3992;
+  color: #fff;
 }
 
-.main-section .green {
+.green input[type="radio"] + label {
   border: 2px solid #01ac66;
   color: #01ac66;
-  font-size: 14px;
-  font-style: italic;
-  font-weight: bold;
+}
+.green input[type="radio"]:checked + label {
+  background-color: #01ac66;
+  border: 2px solid #01ac66;
+  color: #fff;
 }
 
-.main-section .orange {
+.orange input[type="radio"] + label {
   border: 2px solid #f79c31;
   color: #f79c31;
-  font-size: 14px;
-  font-style: italic;
-  font-weight: bold;
+}
+.orange input[type="radio"]:checked + label {
+  background-color: #f79c31;
+  border: 2px solid #f79c31;
+  color: #fff;
 }
 
 .main-section .description-game {

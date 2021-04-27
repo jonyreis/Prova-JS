@@ -15,7 +15,7 @@
 
   function initEvents() {
     Array.prototype.forEach.call($buttonGame, (button) => {
-      button.addEventListener('click', (event) => getJson(event.target.textContent), false)
+      button.addEventListener('click', (event) => getJson(event.target.value), false)
     })
   }
 
