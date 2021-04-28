@@ -9,11 +9,12 @@
   const $numbersContainer = doc.querySelector('[data-js="numbers"]')
   const $descriptionGame = doc.querySelector('[data-js="description-game"]')
   const $addBetToCart = doc.querySelector('[data-js="bets"]')
+  const $totalPrice = doc.querySelector('[data-js="total-price"]')
 
   let dataGame = []
   let arrayRandomNumber
   let bets = []
-  let arr
+  let valueTotalPrice = []
 
   function getJson(nameGame = "Mega-Sena") {
     const ajax = new XMLHttpRequest()
@@ -84,12 +85,16 @@
       color: dataGame[0].color
     })
 
+    valueTotalPrice.push(dataGame[0].price)
   }
 
   function convertToCurrency(number) {
     return number.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
   }
 
+  function calcTotalPrice() {
+    return valueTotalPrice.reduce((accumulator, currentValue) => accumulator + currentValue)
+  }
 
   function addToCart() {
     if (arrayRandomNumber.length > 1) {
@@ -110,7 +115,10 @@
         `
       })
 
-    arr = []
+
+      let totalPriceText = convertToCurrency(calcTotalPrice())
+      $totalPrice.innerHTML = ''
+      $totalPrice.innerHTML += `<span>Cart</span> Total: ${totalPriceText}`
     }
   }
 
