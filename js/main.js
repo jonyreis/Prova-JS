@@ -3,10 +3,12 @@
 
   const $buttonGame = doc.querySelectorAll('[data-js="button-game"]')
   const $buttonCompleteGame = doc.querySelector('[data-js="complete-game"]')
+  const $buttonClearGame = doc.querySelector('[data-js="clear-game"]')
   const $numbersContainer = doc.querySelector('[data-js="numbers"]')
   const $descriptionGame = doc.querySelector('[data-js="description-game"]')
 
   let dataGame = []
+  let arr
 
   function getJson(nameGame = "Mega-Sena") {
     const ajax = new XMLHttpRequest()
@@ -46,25 +48,31 @@
   }
 
   function completeGame() {
-    let arr = []
+    let randomNumber = ''
+    arr = []
 
     while (arr.length < dataGame[0]['max-number']) {
-        var numberAleatory = Math.ceil(Math.random() * dataGame[0].range)
+      randomNumber = Math.ceil(Math.random() * dataGame[0].range)
 
-      if (arr.indexOf(numberAleatory) == -1) {
-        arr.push(numberAleatory);
+      if (arr.indexOf(randomNumber) == -1) {
+        arr.push(randomNumber)
       }
     }
 
     selectNumber(arr, dataGame[0].range)
   }
 
+  function clearGame() {
+    createNumbers(dataGame[0].range)
+    arr = []
+  }
 
   Array.prototype.forEach.call($buttonGame, (button) => {
     button.addEventListener('click', (event) => getJson(event.target.value), false)
   })
 
   $buttonCompleteGame.addEventListener('click', completeGame, false)
+  $buttonClearGame.addEventListener('click', clearGame, false)
 
 
   getJson()
