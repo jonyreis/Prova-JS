@@ -50,7 +50,7 @@
           <button data-js="complete-game" type="button">Complete Game</button>
           <button data-js="clear-game" type="button">Clear Game</button>
         </div>
-        <button class="button-cart" type="button">
+        <button data-js="add-to-cart" class="button-cart" type="button">
           <img src="/assets/cart.png" alt="cartg" width="20" height="20">
           <span>Add to cart</span>
         </button>
@@ -58,18 +58,9 @@
     </section>
     <section class="cart">
       <h3>CART</h3>
-      <div class="bet">
-        <img src="/assets/trash.svg" alt="trash" />
-        <div class="separator"></div>
-        <div class="bet-info">
-          <h4>01, 03, 50, 44, 32</h4>
-          <div>
-            <strong>Lotofácil</strong><span>R$ 2,50</span>
-          </div>
-        </div>
-      </div>
+      <div data-js="bets" class="bets"></div>
       <div class="total">
-        <h2><span>Cart</span> total: R$ 7,00</h2>
+        <h2><span>Cart</span><span data-js="total-price"></span></h2>
       </div>
       <div class="save">
         <button type="button">Save <img src="/assets/arrow-right.svg" alt="arrow-right" /></button>
