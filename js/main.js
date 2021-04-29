@@ -93,7 +93,11 @@
   }
 
   function calcTotalPrice() {
-    return valueTotalPrice.reduce((accumulator, currentValue) => accumulator + currentValue)
+
+  function totalPriceText() {
+    let totalPriceText = convertToCurrency(calcTotalPrice())
+    $totalPrice.innerHTML = ''
+    $totalPrice.innerHTML += `<span>Cart</span> Total: ${totalPriceText}`
   }
 
   function addToCart() {
@@ -114,7 +118,7 @@
           </div>
         `
       })
-
+      totalPriceText()
 
       let totalPriceText = convertToCurrency(calcTotalPrice())
       $totalPrice.innerHTML = ''
