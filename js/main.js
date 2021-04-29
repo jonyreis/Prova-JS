@@ -31,7 +31,7 @@
       dataGame = types.filter(item => item.type === nameGame)
       $descriptionGame.innerHTML = dataGame[0].description
 
-      createNumbers(dataGame[0].range)
+      clearGame()
     }
   }
 
@@ -158,6 +158,7 @@
       })
       addButtonDeleteInHTML()
       totalPriceText()
+      clearGame()
 
     }
   }
