@@ -125,7 +125,7 @@
     return $button
   }
 
-  function addButtonDelete() {
+  function addButtonDeleteInHTML() {
     const betClass = doc.querySelectorAll('[data-js="bet"]')
 
     Array.prototype.forEach.call(betClass, (button) => {
@@ -156,7 +156,7 @@
         </div>
         `
       })
-      addButtonDelete()
+      addButtonDeleteInHTML()
       totalPriceText()
 
     }
