@@ -94,6 +94,26 @@
 
   function calcTotalPrice() {
 
+  function createDeleteButton() {
+    const $button = doc.createElement('button')
+    const $img = doc.createElement('img')
+    $img.setAttribute('src', '/assets/trash.svg')
+
+    $button.setAttribute('type', 'button')
+    $button.addEventListener('click', (event) => removeBet(event, $button), false)
+
+    $button.appendChild($img)
+    return $button
+  }
+
+  function addButtonDelete() {
+    const betClass = doc.querySelectorAll('[data-js="bet"]')
+
+    Array.prototype.forEach.call(betClass, (button) => {
+      button.appendChild(createDeleteButton())
+    })
+  }
+
   function totalPriceText() {
     let totalPriceText = convertToCurrency(calcTotalPrice())
     $totalPrice.innerHTML = ''
@@ -104,20 +124,20 @@
     if (arrayRandomNumber.length > 1) {
       createBet(arrayRandomNumber)
       $addBetToCart.innerHTML = ''
-      bets.map(bet => {
+      bets.forEach(bet => {
         $addBetToCart.innerHTML += `
-          <div class="bet">
-            <img src="/assets/trash.svg" alt="trash" />
-            <div class="separator" style="background-color: ${bet.color};"></div>
-            <div class="bet-info">
-              <h4>${bet.arrayNumbers}</h4>
-              <div>
-                <strong style="color: ${bet.color};">${bet.type}</strong><span>${convertToCurrency(bet.price)}</span>
-              </div>
+        <div data-js="bet" class="bet" id="${bet.timestamp}">
+          <div class="bet-info">
+            <h4>${bet.arrayNumbers}</h4>
+            <div>
+              <strong style="color: ${bet.color};">${bet.type}</strong><span>${convertToCurrency(bet.price)}</span>
             </div>
           </div>
+          <div class="separator" style="background-color: ${bet.color};"></div>
+        </div>
         `
       })
+      addButtonDelete()
       totalPriceText()
 
       let totalPriceText = convertToCurrency(calcTotalPrice())
