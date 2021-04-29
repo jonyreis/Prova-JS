@@ -6,15 +6,16 @@
   const $buttonClearGame = doc.querySelector('[data-js="clear-game"]')
   const $buttonAddToCart = doc.querySelector('[data-js="add-to-cart"]')
 
+  const $betsContainer = doc.querySelector('[data-js="bets"]')
+
   const $numbersContainer = doc.querySelector('[data-js="numbers"]')
   const $descriptionGame = doc.querySelector('[data-js="description-game"]')
   const $addBetToCart = doc.querySelector('[data-js="bets"]')
   const $totalPrice = doc.querySelector('[data-js="total-price"]')
 
-  let dataGame = []
   let arrayRandomNumber
   let bets = []
-  let valueTotalPrice = []
+  let dataGame = []
 
   function getJson(nameGame = "Mega-Sena") {
     const ajax = new XMLHttpRequest()
@@ -42,7 +43,6 @@
   }
 
   function selectNumber(arrayRandomNumber, range) {
-    console.log(arrayRandomNumber, range)
     $numbersContainer.innerHTML = ''
     for (let i = 1; i <= range; i++) {
       if (arrayRandomNumber.indexOf(i) === -1) {
@@ -82,10 +82,10 @@
       arrayNumbers: arrayNumbers,
       type: dataGame[0].type,
       price: dataGame[0].price,
-      color: dataGame[0].color
+      color: dataGame[0].color,
+      timestamp: Date.now()
     })
 
-    valueTotalPrice.push(dataGame[0].price)
   }
 
   function convertToCurrency(number) {
@@ -93,6 +93,25 @@
   }
 
   function calcTotalPrice() {
+    const arrayPrices = bets.map(item => item.price)
+
+    return arrayPrices.reduce((accumulator, currentValue) => accumulator + currentValue)
+  }
+
+  function removeBet(event, btn) {
+    const bet = btn.parentNode
+
+    $betsContainer.removeChild(bet)
+
+    bets.forEach((item, index) => {
+      if (item.timestamp == event.path[2].id) {
+        bets.splice(index, 1)
+      }
+    })
+
+    totalPriceText()
+
+  }
 
   function createDeleteButton() {
     const $button = doc.createElement('button')
@@ -140,9 +159,6 @@
       addButtonDelete()
       totalPriceText()
 
-      let totalPriceText = convertToCurrency(calcTotalPrice())
-      $totalPrice.innerHTML = ''
-      $totalPrice.innerHTML += `<span>Cart</span> Total: ${totalPriceText}`
     }
   }
 

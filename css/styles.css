@@ -242,14 +242,17 @@ main {
 }
 
 .cart .bet {
-  display: flex;
+  display: grid;
+  grid-template-columns: 9fr 1.5fr 1fr;
+  direction: rtl;
   align-items: center;
+
   margin: 16px 0;
 }
 
 .cart .bet img {
   width: 20px;
-  margin-right: 14px;
+  cursor: pointer;
 }
 
 .separator {
@@ -260,9 +263,18 @@ main {
   height: 86px;
 }
 
+.bet button {
+  background-color: transparent;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+}
+
 .bet-info {
   display: flex;
   flex-direction: column;
+  text-align: left;
 
   margin-left: 14px;
 }
@@ -285,6 +297,8 @@ main {
   font-size: 16px;
   font-style: italic;
   font-weight: bold;
+
+  margin-left: 6px;
 }
 
 .bet-info div span {
