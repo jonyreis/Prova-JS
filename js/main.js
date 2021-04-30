@@ -11,6 +11,7 @@
   const $numbersContainer = doc.querySelector('[data-js="numbers"]')
   const $descriptionGame = doc.querySelector('[data-js="description-game"]')
   const $newBet = doc.querySelector('[data-js="new-bet"]')
+  const $betsContainer = doc.querySelector('[data-js="bets"]')
   const $totalPrice = doc.querySelector('[data-js="total-price"]')
 
   let arrayNumbers = []
@@ -188,12 +189,19 @@
     return $button
   }
 
-  function addButtonDeleteInHTML() {
-    const betClass = doc.querySelectorAll('[data-js="bet"]')
+  function removeBet(event, btn) {
+    const bet = btn.parentNode
 
-    Array.prototype.forEach.call(betClass, (button) => {
-      button.appendChild(createDeleteButton())
+    $betsContainer.removeChild(bet)
+
+    bets.forEach((bet, index) => {
+      if (bet.timestamp == event.path[2].id) {
+        bets.splice(index, 1)
+      }
     })
+
+    totalPriceText()
+    bets.length < 1 && emptyCart()
   }
 
   function totalPriceText() {
@@ -223,17 +231,12 @@
       totalPriceText()
       clearGame()
 
+  function emptyCart() {
+    if (bets.length < 1) {
+      $betsContainer.innerHTML = '<p class="empty-cart" >Carrinho Vazio</p>'
     }
   }
 
-  Array.prototype.forEach.call($buttonGame, (button) => {
-    button.addEventListener('click', (event) => getJson(event.target.value), false)
-  })
-
-  $buttonCompleteGame.addEventListener('click', completeGame, false)
-  $buttonClearGame.addEventListener('click', clearGame, false)
-  $buttonAddToCart.addEventListener('click', addToCart, false)
-
-  getJson()
+  emptyCart()
 
 })(window, document)
