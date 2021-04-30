@@ -44,18 +44,22 @@
   function createNumbers(range) {
     $numbersContainer.innerHTML = ''
     for (let i = 1; i <= range; i++) {
-      $numbersContainer.innerHTML += `<div class="number">${i}</div>`
+      $numbersContainer.appendChild(createNumber(i))
     }
   }
 
-  function selectNumber(arrayRandomNumber, range) {
-    $numbersContainer.innerHTML = ''
-    for (let i = 1; i <= range; i++) {
-      if (arrayRandomNumber.indexOf(i) === -1) {
-        $numbersContainer.innerHTML += `<div class="number">${i}</div>`
-      } else {
-        $numbersContainer.innerHTML += `<div class="number selected">${i}</div>`
-      }
+  function createNumber(value, select) {
+    const $divNumber = doc.createElement('div')
+
+    $divNumber.setAttribute('data-js', 'number')
+    $divNumber.setAttribute('class', `number ${select && 'selected'}`)
+    $divNumber.setAttribute('id', `number-${value}`)
+    $divNumber.addEventListener('click', (e) => selectNumber(Number(e.target.innerHTML)), false)
+
+    $divNumber.appendChild(doc.createTextNode(String(value).padStart(2, '0')))
+
+    return $divNumber
+  }
     }
   }
 
