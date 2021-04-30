@@ -13,7 +13,7 @@
   const $newBet = doc.querySelector('[data-js="new-bet"]')
   const $totalPrice = doc.querySelector('[data-js="total-price"]')
 
-  let arrayRandomNumber
+  let arrayNumbers = []
   let bets = []
   let dataGame = []
 
@@ -39,6 +39,11 @@
   function changeOfGameDescription() {
     $descriptionGame.innerHTML = dataGame[0].description
     $newBet.innerHTML = `<span>New Bet</span> for ${dataGame[0].type}`
+  }
+
+  function clearGame() {
+    createNumbers(dataGame[0].range)
+    arrayNumbers = []
   }
 
   function createNumbers(range) {
@@ -78,22 +83,57 @@
 
   function completeGame() {
     let randomNumber = ''
-    arrayRandomNumber = []
 
-    while (arrayRandomNumber.length < dataGame[0]['max-number']) {
+    if (arrayNumbers.length >= dataGame[0]['max-number']) {
+      arrayNumbers = []
+    }
+
+    while (arrayNumbers.length < dataGame[0]['max-number']) {
       randomNumber = Math.ceil(Math.random() * dataGame[0].range)
 
-      if (arrayRandomNumber.indexOf(randomNumber) == -1) {
-        arrayRandomNumber.push(randomNumber)
+      if (arrayNumbers.indexOf(randomNumber) == -1) {
+        arrayNumbers.push(randomNumber)
       }
     }
 
-    selectNumber(arrayRandomNumber, dataGame[0].range)
+
+    selectNumberRandom(arrayNumbers, dataGame[0].range)
   }
 
-  function clearGame() {
-    createNumbers(dataGame[0].range)
-    arrayRandomNumber = []
+  function selectNumberRandom(arrayNumbers, range) {
+    $numbersContainer.innerHTML = ''
+
+    for (let i = 1; i <= range; i++) {
+      if (arrayNumbers.indexOf(i) === -1) {
+        $numbersContainer.appendChild(createNumber(i))
+      } else {
+        $numbersContainer.appendChild(createNumber(i, 'select'))
+      }
+    }
+  }
+
+  function addToCart() {
+    if (arrayNumbers.length > 1) {
+      createBet(arrayNumbers)
+      $betsContainer.innerHTML = ''
+      bets.forEach(bet => {
+        $betsContainer.innerHTML += `
+        <div data-js="bet" class="bet" id="${bet.timestamp}">
+          <div class="bet-info">
+            <h4>${bet.arrayNumbers}</h4>
+            <div>
+              <strong style="color: ${bet.color};">${bet.type}</strong><span>${convertToCurrency(bet.price)}</span>
+            </div>
+          </div>
+          <div class="separator" style="background-color: ${bet.color};"></div>
+        </div>
+        `
+      })
+      addButtonDeleteInHTML()
+      totalPriceText()
+      clearGame()
+
+    }
   }
 
   function createBet(arrayNumbers) {
