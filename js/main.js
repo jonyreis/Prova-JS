@@ -60,7 +60,20 @@
 
     return $divNumber
   }
+
+  function selectNumber(value) {
+    const numberClicked = doc.querySelector(`#number-${value}`)
+
+    if (arrayNumbers.indexOf(value) === -1 && arrayNumbers.length < dataGame[0]['max-number']) {
+      numberClicked.setAttribute('class', 'number selected')
+      arrayNumbers.push(value)
+    } else if (arrayNumbers.indexOf(value) !== -1) {
+      numberClicked.setAttribute('class', 'number')
+      const indexSelect = arrayNumbers.indexOf(value)
+      arrayNumbers.splice(indexSelect, 1)
     }
+
+    return
   }
 
   function completeGame() {

@@ -170,6 +170,7 @@ main {
 
   width: 65px;
   height: 65px;
+  cursor: pointer;
 }
 
 .main-section .selected {
