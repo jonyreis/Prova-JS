@@ -103,10 +103,10 @@
     }
 
 
-    selectNumberRandom(arrayNumbers, dataGame[0].range)
+    selectRandomNumber(arrayNumbers, dataGame[0].range)
   }
 
-  function selectNumberRandom(arrayNumbers, range) {
+  function selectRandomNumber(arrayNumbers, range) {
     $numbersContainer.innerHTML = ''
 
     for (let i = 1; i <= range; i++) {
@@ -154,7 +154,6 @@
       color: dataGame[0].color,
       timestamp: Date.now()
     })
-
   }
 
   function addButtonDeleteInHTML() {
