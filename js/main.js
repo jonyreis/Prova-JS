@@ -6,17 +6,23 @@
   const $buttonClearGame = doc.querySelector('[data-js="clear-game"]')
   const $buttonAddToCart = doc.querySelector('[data-js="add-to-cart"]')
 
-  const $betsContainer = doc.querySelector('[data-js="bets"]')
-
-  const $numbersContainer = doc.querySelector('[data-js="numbers"]')
   const $descriptionGame = doc.querySelector('[data-js="description-game"]')
   const $newBet = doc.querySelector('[data-js="new-bet"]')
+  const $numbersContainer = doc.querySelector('[data-js="numbers"]')
   const $betsContainer = doc.querySelector('[data-js="bets"]')
   const $totalPrice = doc.querySelector('[data-js="total-price"]')
 
   let arrayNumbers = []
   let bets = []
   let dataGame = []
+
+  Array.prototype.forEach.call($buttonGame, (button) => {
+    button.addEventListener('click', (event) => getJson(event.target.value), false)
+  })
+
+  $buttonCompleteGame.addEventListener('click', completeGame, false)
+  $buttonClearGame.addEventListener('click', clearGame, false)
+  $buttonAddToCart.addEventListener('click', addToCart, false)
 
   function getJson(nameGame) {
     const ajax = new XMLHttpRequest()
@@ -30,7 +36,6 @@
       const { types } = JSON.parse(ajax.responseText)
 
       dataGame = types.filter(item => item.type === nameGame)
-      $descriptionGame.innerHTML = dataGame[0].description
 
       changeOfGameDescription()
       clearGame()
@@ -152,29 +157,12 @@
 
   }
 
-  function convertToCurrency(number) {
-    return number.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
-  }
+  function addButtonDeleteInHTML() {
+    const betClass = doc.querySelectorAll('[data-js="bet"]')
 
-  function calcTotalPrice() {
-    const arrayPrices = bets.map(item => item.price)
-
-    return arrayPrices.reduce((accumulator, currentValue) => accumulator + currentValue)
-  }
-
-  function removeBet(event, btn) {
-    const bet = btn.parentNode
-
-    $betsContainer.removeChild(bet)
-
-    bets.forEach((item, index) => {
-      if (item.timestamp == event.path[2].id) {
-        bets.splice(index, 1)
-      }
+    Array.prototype.forEach.call(betClass, (button) => {
+      button.appendChild(createDeleteButton())
     })
-
-    totalPriceText()
-
   }
 
   function createDeleteButton() {
@@ -210,26 +198,15 @@
     $totalPrice.innerHTML += `<span>Cart</span> Total: ${totalPriceText}`
   }
 
-  function addToCart() {
-    if (arrayRandomNumber.length > 1) {
-      createBet(arrayRandomNumber)
-      $addBetToCart.innerHTML = ''
-      bets.forEach(bet => {
-        $addBetToCart.innerHTML += `
-        <div data-js="bet" class="bet" id="${bet.timestamp}">
-          <div class="bet-info">
-            <h4>${bet.arrayNumbers}</h4>
-            <div>
-              <strong style="color: ${bet.color};">${bet.type}</strong><span>${convertToCurrency(bet.price)}</span>
-            </div>
-          </div>
-          <div class="separator" style="background-color: ${bet.color};"></div>
-        </div>
-        `
-      })
-      addButtonDeleteInHTML()
-      totalPriceText()
-      clearGame()
+  function convertToCurrency(number) {
+    return number.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+  }
+
+  function calcTotalPrice() {
+    const arrayPrices = bets.length > 0 ? bets.map(item => item.price) : [0]
+
+    return arrayPrices.reduce((accumulator, currentValue) => accumulator + currentValue)
+  }
 
   function emptyCart() {
     if (bets.length < 1) {
