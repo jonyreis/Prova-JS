@@ -17,7 +17,7 @@
   let bets = []
   let dataGame = []
 
-  function getJson(nameGame = "Mega-Sena") {
+  function getJson(nameGame) {
     const ajax = new XMLHttpRequest()
     ajax.open("GET", "./games.json")
     ajax.send()
