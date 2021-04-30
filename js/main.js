@@ -119,7 +119,7 @@
   }
 
   function addToCart() {
-    if (arrayNumbers.length > 1) {
+    if (arrayNumbers.length === dataGame[0]['max-number']) {
       createBet(arrayNumbers)
       $betsContainer.innerHTML = ''
       bets.forEach(bet => {
@@ -135,11 +135,15 @@
         </div>
         `
       })
+
       addButtonDeleteInHTML()
       totalPriceText()
       clearGame()
+    } else {
 
+      alert(`${dataGame[0].type} deve ter ${dataGame[0]['max-number']} números selecionados.`)
     }
+
   }
 
   function createBet(arrayNumbers) {
