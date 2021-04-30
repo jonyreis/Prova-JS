@@ -10,7 +10,7 @@
 
   const $numbersContainer = doc.querySelector('[data-js="numbers"]')
   const $descriptionGame = doc.querySelector('[data-js="description-game"]')
-  const $addBetToCart = doc.querySelector('[data-js="bets"]')
+  const $newBet = doc.querySelector('[data-js="new-bet"]')
   const $totalPrice = doc.querySelector('[data-js="total-price"]')
 
   let arrayRandomNumber
@@ -31,8 +31,14 @@
       dataGame = types.filter(item => item.type === nameGame)
       $descriptionGame.innerHTML = dataGame[0].description
 
+      changeOfGameDescription()
       clearGame()
     }
+  }
+
+  function changeOfGameDescription() {
+    $descriptionGame.innerHTML = dataGame[0].description
+    $newBet.innerHTML = `<span>New Bet</span> for ${dataGame[0].type}`
   }
 
   function createNumbers(range) {
