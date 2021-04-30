@@ -1,11 +1,11 @@
 (function (win, doc) {
   'use strict'
 
-  const $buttonGame = doc.querySelectorAll('[data-js="button-game"]')
   const $buttonCompleteGame = doc.querySelector('[data-js="complete-game"]')
   const $buttonClearGame = doc.querySelector('[data-js="clear-game"]')
   const $buttonAddToCart = doc.querySelector('[data-js="add-to-cart"]')
 
+  const $ulButtonGame = doc.querySelector('[data-js="ul-button"]')
   const $descriptionGame = doc.querySelector('[data-js="description-game"]')
   const $newBet = doc.querySelector('[data-js="new-bet"]')
   const $numbersContainer = doc.querySelector('[data-js="numbers"]')
@@ -14,41 +14,70 @@
 
   let arrayNumbers = []
   let bets = []
-  let dataGame = []
+  let data = []
+  let selectedGameData = []
 
-  Array.prototype.forEach.call($buttonGame, (button) => {
-    button.addEventListener('click', (event) => getJson(event.target.value), false)
-  })
+  const colors = {
+    '#7F3992': 'purple',
+    '#01AC66': 'green',
+    '#F79C31': 'orange',
+    '#EE0EE7': 'pink'
+  }
 
   $buttonCompleteGame.addEventListener('click', completeGame, false)
   $buttonClearGame.addEventListener('click', clearGame, false)
   $buttonAddToCart.addEventListener('click', addToCart, false)
 
-  function getJson(nameGame) {
+  function getJson() {
     const ajax = new XMLHttpRequest()
     ajax.open("GET", "./games.json")
     ajax.send()
-    ajax.addEventListener("readystatechange", () => getGameInfo(ajax, nameGame), false)
+    ajax.addEventListener("readystatechange", () => getGameJson(ajax), false)
   }
+  getJson()
 
-  function getGameInfo(ajax, nameGame) {
+  function getGameJson(ajax) {
     if (ajax.readyState === 4 && ajax.status === 200) {
       const { types } = JSON.parse(ajax.responseText)
+      data = types
 
-      dataGame = types.filter(item => item.type === nameGame)
-
-      changeOfGameDescription()
-      clearGame()
+      createButtonGame()
     }
   }
 
+  function createButtonGame() {
+    data.forEach(item => {
+      $ulButtonGame.innerHTML += `
+      <li class="${colors[item.color]}">
+        <input data-js="button-game" type="radio" id=${item.type.toLowerCase()} name="game" value=${item.type}>
+        <label for=${item.type.toLowerCase()}>${item.type}</label>
+      </li>
+      `
+    })
+    addEventOnBtnGame()
+  }
+
+  function addEventOnBtnGame() {
+    const btnGame = doc.querySelectorAll('[data-js="button-game"]')
+
+    Array.prototype.forEach.call(btnGame, (input) => {
+      input.addEventListener('click', (e) => getGameInfo(e.target.value), false)
+    })
+  }
+
+  function getGameInfo(nameGame) {
+    selectedGameData = data.filter(item => item.type === nameGame)
+    changeOfGameDescription()
+    clearGame()
+  }
+
   function changeOfGameDescription() {
-    $descriptionGame.innerHTML = dataGame[0].description
-    $newBet.innerHTML = `<span>New Bet</span> for ${dataGame[0].type}`
+    $descriptionGame.innerHTML = selectedGameData[0].description
+    $newBet.innerHTML = `<span>New Bet</span> for ${selectedGameData[0].type}`
   }
 
   function clearGame() {
-    createNumbers(dataGame[0].range)
+    createNumbers(selectedGameData[0].range)
     arrayNumbers = []
   }
 
@@ -75,7 +104,7 @@
   function selectNumber(value) {
     const numberClicked = doc.querySelector(`#number-${value}`)
 
-    if (arrayNumbers.indexOf(value) === -1 && arrayNumbers.length < dataGame[0]['max-number']) {
+    if (arrayNumbers.indexOf(value) === -1 && arrayNumbers.length < selectedGameData[0]['max-number']) {
       numberClicked.setAttribute('class', 'number selected')
       arrayNumbers.push(value)
     } else if (arrayNumbers.indexOf(value) !== -1) {
@@ -90,20 +119,19 @@
   function completeGame() {
     let randomNumber = ''
 
-    if (arrayNumbers.length >= dataGame[0]['max-number']) {
+    if (arrayNumbers.length >= selectedGameData[0]['max-number']) {
       arrayNumbers = []
     }
 
-    while (arrayNumbers.length < dataGame[0]['max-number']) {
-      randomNumber = Math.ceil(Math.random() * dataGame[0].range)
+    while (arrayNumbers.length < selectedGameData[0]['max-number']) {
+      randomNumber = Math.ceil(Math.random() * selectedGameData[0].range)
 
       if (arrayNumbers.indexOf(randomNumber) == -1) {
         arrayNumbers.push(randomNumber)
       }
     }
 
-
-    selectRandomNumber(arrayNumbers, dataGame[0].range)
+    selectRandomNumber(arrayNumbers, selectedGameData[0].range)
   }
 
   function selectRandomNumber(arrayNumbers, range) {
@@ -119,7 +147,7 @@
   }
 
   function addToCart() {
-    if (arrayNumbers.length === dataGame[0]['max-number']) {
+    if (arrayNumbers.length === selectedGameData[0]['max-number']) {
       createBet(arrayNumbers)
       $betsContainer.innerHTML = ''
       bets.forEach(bet => {
@@ -135,13 +163,13 @@
         </div>
         `
       })
-
       addButtonDeleteInHTML()
       totalPriceText()
       clearGame()
-    } else {
 
-      alert(`${dataGame[0].type} deve ter ${dataGame[0]['max-number']} números selecionados.`)
+    } else {
+      alert(`${selectedGameData[0].type} deve ter ${selectedGameData[0]['max-number']} números selecionados.`)
+
     }
 
   }
@@ -153,9 +181,9 @@
 
     bets.push({
       arrayNumbers: arrayNumbers,
-      type: dataGame[0].type,
-      price: dataGame[0].price,
-      color: dataGame[0].color,
+      type: selectedGameData[0].type,
+      price: selectedGameData[0].price,
+      color: selectedGameData[0].color,
       timestamp: Date.now()
     })
   }
