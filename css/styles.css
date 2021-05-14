@@ -104,12 +104,12 @@ main {
   cursor: pointer;
 }
 
-.purple input,
+/* .purple input,
 .green input,
 .orange input,
 .pink input {
   display: none;
-}
+} */
 
 .purple input[type="radio"] + label {
   border: 2px solid #7f3992;

@@ -46,10 +46,11 @@
   }
 
   function createButtonGame() {
+    // const styleCheck = ``
     data.forEach(item => {
       $ulButtonGame.innerHTML += `
       <li class="${colors[item.color]}">
-        <input data-js="button-game" type="radio" id=${item.type.toLowerCase()} name="game" value=${item.type}>
+        <input style="display: none" data-js="button-game" type="radio" id=${item.type.toLowerCase()} name="game" value=${item.type}>
         <label for=${item.type.toLowerCase()}>${item.type}</label>
       </li>
       `
